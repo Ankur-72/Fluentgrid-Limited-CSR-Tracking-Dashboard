@@ -135,6 +135,21 @@
       box-shadow: 0 10px 24px rgba(15, 39, 64, 0.12);
     }
 
+    .info-button {
+      transition: all 180ms ease;
+    }
+
+    .info-button:hover {
+      background-color: #091b2d;
+      color: #ffffff;
+      border-color: #091b2d;
+    }
+
+    .modal-backdrop {
+      background-color: rgba(9, 27, 45, 0.52);
+      backdrop-filter: blur(4px);
+    }
+
     body.presentation-mode .detail-copy,
     body.presentation-mode .reading-guide-panel,
     body.presentation-mode .secondary-summary {
@@ -184,7 +199,7 @@
 </head>
 <body class="text-navy-900">
   <div class="min-h-screen lg:flex">
-    <aside class="w-full border-b border-navy-100 bg-navy-900 px-5 py-6 text-white lg:sticky lg:top-0 lg:h-screen lg:w-72 lg:border-b-0 lg:border-r lg:border-navy-800">
+    <aside class="w-full border-b border-navy-100 bg-navy-900 px-5 py-6 text-white lg:sticky lg:top-0 lg:h-screen lg:w-72 lg:overflow-y-auto lg:border-b-0 lg:border-r lg:border-navy-800">
       <div class="flex items-center gap-3 border-b border-navy-800 pb-5">
         <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-xl">
           <i class="fa-solid fa-industry"></i>
@@ -210,80 +225,81 @@
         </a>
         <a href="#agritech" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
           <i class="fa-solid fa-seedling w-5"></i>
-          <span>Agritech Supply Chain</span>
+          <span>Farm Supply Flow</span>
         </a>
-        <a href="#healthcare" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
-          <i class="fa-solid fa-heart-pulse w-5"></i>
-          <span>Healthcare</span>
+        <a href="#education" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-school w-5"></i>
+          <span>Education Infrastructure</span>
         </a>
         <a href="#vendors" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
           <i class="fa-solid fa-address-book w-5"></i>
-          <span>Vendor Directory</span>
+          <span>Field Partners</span>
+        </a>
+        <a href="#impact" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-chart-pie w-5"></i>
+          <span>Impact Overview</span>
         </a>
       </nav>
 
       <div class="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
-        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-200">Operational Focus</p>
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-200">Quick Facts</p>
         <ul class="mt-3 space-y-3 text-sm text-navy-100">
           <li class="flex items-start gap-3">
             <i class="fa-solid fa-circle-exclamation mt-1 text-danger"></i>
-            <span>1 critical groundwater alert requiring escalation</span>
+            <span>1 red alert at Valluru due to groundwater contamination</span>
           </li>
           <li class="flex items-start gap-3">
             <i class="fa-solid fa-wrench mt-1 text-warning"></i>
-            <span>Maintenance backlog concentrated in rural water assets</span>
+            <span>Gondhuru plant needs hardware fixes this quarter</span>
           </li>
           <li class="flex items-start gap-3">
             <i class="fa-solid fa-hand-holding-heart mt-1 text-emerald-400"></i>
-            <span>Low-cost transit and agritech pilots driving strong social impact</span>
+            <span>Child care transport and farm cooling pilot show strong field value</span>
           </li>
         </ul>
+      </div>
+
+      <div class="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-200">Status Legend</p>
+        <div class="mt-3 space-y-2 text-sm text-navy-100">
+          <div class="flex items-center gap-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+            <span>Healthy</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-warning"></span>
+            <span>Needs attention</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="h-2.5 w-2.5 rounded-full bg-danger"></span>
+            <span>Immediate action</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-navy-100">
+        <p class="font-semibold text-white">Created by</p>
+        <p class="mt-2">Ankur Tadipatri</p>
+        <p class="text-navy-200">CSR Intern, Fluentgrid Limited</p>
       </div>
     </aside>
 
     <main class="flex-1 px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
-      <section class="sticky top-0 z-20 mb-4 rounded-2xl border border-white/80 bg-white/90 p-3 shadow-soft backdrop-blur">
-        <div class="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-          <div class="flex items-center gap-3 text-sm text-navy-600">
-            <span class="rounded-full bg-navy-100 px-3 py-1 font-semibold text-navy-700">Operational Navigation</span>
-            <span>Jump directly to the module you need without losing context.</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <a href="#overview" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Overview</a>
-            <a href="#priority-actions" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Priority Actions</a>
-            <a href="#asset-health" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Asset Health</a>
-            <a href="#agritech" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Agritech</a>
-            <a href="#logistics" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Logistics</a>
-            <a href="#healthcare" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Impact Analytics</a>
-          </div>
-        </div>
-        <div class="no-print mt-3 flex flex-wrap gap-2 border-t border-navy-100 pt-3">
-          <button id="presentationToggle" type="button" class="control-button inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">
-            <i class="fa-solid fa-display"></i>
-            Presentation Mode
-          </button>
-          <button id="printDashboard" type="button" class="control-button inline-flex items-center gap-2 rounded-xl border border-navy-900 bg-navy-900 px-4 py-2 text-sm font-semibold text-white">
-            <i class="fa-solid fa-print"></i>
-            Export / Print PDF
-          </button>
-        </div>
-      </section>
-
       <header id="overview" class="panel-glass rounded-3xl border border-white/70 px-5 py-5 shadow-panel sm:px-6">
         <div class="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
           <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-navy-500">Corporate Social Responsibility Control Center</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-navy-500">Corporate Social Responsibility Projects Control Centre</p>
             <h2 class="mt-2 text-2xl font-bold tracking-tight text-navy-900 sm:text-3xl">Rural operations, supply chain, and budget deployment at a glance</h2>
             <p class="detail-copy mt-3 max-w-3xl text-sm leading-6 text-navy-600">
-              Active operational dashboard conceptualized by management intern Ankur Tadipatri for real-time monitoring of water assets, logistics coordination, agritech throughput, healthcare readiness, and CSR budget deployment.
+              Created by Ankur Tadipatri, CSR Intern, Fluentgrid Limited, to help the CSR team track water projects, field logistics, school support, farm supply efforts, and quarterly spending in one clear boardroom view.
             </p>
           </div>
           <div class="flex min-w-0 flex-col gap-3 rounded-2xl border border-navy-100 bg-navy-50 px-4 py-4 sm:min-w-[290px]">
             <div class="flex items-center justify-between gap-3">
               <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Active User</p>
-                <p class="mt-1 text-lg font-bold text-navy-900">Mr. Ravi Kanth</p>
-                <p class="text-sm text-navy-600">Senior Manager, CSV</p>
+                <p class="mt-1 text-lg font-bold text-navy-900">Mr. S Ravi Kanth Reddy</p>
+                <p class="text-sm text-navy-600">Consultant - Admin, CSR &amp; EHS</p>
               </div>
               <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-navy-900 text-white">
                 <i class="fa-solid fa-user-tie text-lg"></i>
@@ -293,13 +309,23 @@
               <i class="fa-solid fa-triangle-exclamation"></i>
               <span>Red Alert: Valluru Groundwater Contamination</span>
             </div>
+            <div class="no-print flex flex-wrap gap-2 pt-1">
+              <button id="presentationToggle" type="button" class="control-button inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">
+                <i class="fa-solid fa-display"></i>
+                Presentation Mode
+              </button>
+              <button id="printDashboard" type="button" class="control-button inline-flex items-center gap-2 rounded-xl border border-navy-900 bg-navy-900 px-4 py-2 text-sm font-semibold text-white">
+                <i class="fa-solid fa-print"></i>
+                Export / Print PDF
+              </button>
+            </div>
           </div>
         </div>
 
         <section class="mt-6 grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
-          <article class="metric-card rounded-2xl border border-warning/20 bg-white p-5 shadow-soft">
+          <article class="metric-card rounded-2xl border border-warning/20 bg-white p-5 shadow-soft" title="One of the two water plants is currently running. Valluru remains offline.">
             <div class="flex items-center justify-between">
-              <p class="text-sm font-semibold text-navy-600">Asset Uptime</p>
+              <p class="text-sm font-semibold text-navy-600">Water Plants Running</p>
               <span class="status-pill bg-warning/10 text-warning">
                 <span class="h-2 w-2 rounded-full bg-warning"></span>
                 Warning
@@ -307,8 +333,8 @@
             </div>
             <div class="mt-4 flex items-end justify-between gap-3">
               <div>
-                <p class="text-3xl font-extrabold text-navy-900">50%</p>
-                <p class="mt-1 text-sm text-navy-500">Valluru offline is suppressing network reliability</p>
+                <p class="text-3xl font-extrabold text-navy-900">1 of 2</p>
+                <p class="mt-1 text-sm text-navy-500">Gondhuru is running. Valluru remains offline.</p>
               </div>
               <i class="fa-solid fa-gauge-high text-3xl text-warning"></i>
             </div>
@@ -329,6 +355,10 @@
               </div>
               <i class="fa-solid fa-users text-3xl text-success"></i>
             </div>
+            <button type="button" data-modal-target="beneficiariesModal" class="info-button mt-4 inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-success">
+              <i class="fa-solid fa-circle-info"></i>
+              View cluster breakdown
+            </button>
           </article>
 
           <article class="metric-card rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
@@ -342,10 +372,14 @@
             <div class="mt-4 flex items-end justify-between gap-3">
               <div>
                 <p class="text-3xl font-extrabold text-navy-900">Rs. 1,25,000</p>
-                <p class="mt-1 text-sm text-navy-500">Allocated across asset recovery, transport, and pilots</p>
+                <p class="mt-1 text-sm text-navy-500">Water fixes, child care home transport, farm cooling pilot, and school upgrades</p>
               </div>
               <i class="fa-solid fa-wallet text-3xl text-navy-700"></i>
             </div>
+            <button type="button" data-modal-target="budgetModal" class="info-button mt-4 inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-navy-50 px-3 py-2 text-sm font-semibold text-navy-700">
+              <i class="fa-solid fa-circle-info"></i>
+              View budget basis
+            </button>
           </article>
 
           <article class="metric-card rounded-2xl border border-danger/20 bg-white p-5 shadow-soft">
@@ -376,11 +410,11 @@
               </div>
               <div class="rounded-2xl bg-navy-50 p-4">
                 <p class="text-xs font-semibold uppercase tracking-[0.16em] text-navy-500">High ROI Program</p>
-                <p class="mt-2 text-sm font-semibold text-navy-900">Orphanage transit and Cool Crate operations are delivering outsized social value for low spend.</p>
+                <p class="mt-2 text-sm font-semibold text-navy-900">Transportation for Child Care Home and the farm cooling pilot are delivering strong social value for modest spend.</p>
               </div>
               <div class="rounded-2xl bg-navy-50 p-4">
-                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-navy-500">Next Enablement Move</p>
-                <p class="mt-2 text-sm font-semibold text-navy-900">Digitize clinic stock visibility to reduce medicine stockout risk in Gambheeram.</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-navy-500">Next Procurement Need</p>
+                <p class="mt-2 text-sm font-semibold text-navy-900">Classroom benches and basic RO support for the Hukumpeta and Neelamputtu school pilot need to move into procurement.</p>
               </div>
             </div>
           </article>
@@ -388,9 +422,9 @@
           <article class="rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Boardroom Use</p>
             <div class="mt-3 space-y-3 text-sm text-navy-700">
-              <p>Use the KPI strip and executive snapshot for management reviews.</p>
-              <p>Use Priority Actions and Asset Health for weekly operational standups.</p>
-              <p>Use the print button above to save a PDF for circulation in leadership meetings.</p>
+              <p>Use the KPI cards for a quick read on reach, spend, plant status, and active risks.</p>
+              <p>Use Priority Actions and Asset Health during weekly review calls to decide field follow-up and vendor movement.</p>
+              <p>Use Export / Print PDF when this dashboard needs to be circulated before management meetings.</p>
             </div>
           </article>
         </section>
@@ -421,7 +455,7 @@
                     <span class="text-sm font-semibold text-navy-500">Water Infrastructure</span>
                   </div>
                   <h4 class="mt-3 text-lg font-bold text-navy-900">Restore Valluru RO Plant and address contamination risk</h4>
-                  <p class="mt-2 text-sm leading-6 text-navy-600">Valluru RO Plant remains offline and carries the only red alert in the system. Required action is a full technical overhaul and 1 Day Operator Training Camp.</p>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">Valluru RO Plant remains offline and carries the only red alert in the system. Required action is full technical repair and a 1 day operator training camp.</p>
                 </div>
                 <a href="#asset-health" class="quick-link section-link inline-flex items-center gap-2 rounded-xl border border-danger/20 bg-danger/5 px-4 py-2 text-sm font-semibold text-danger">
                   <i class="fa-solid fa-arrow-right"></i>
@@ -440,8 +474,8 @@
                     </span>
                     <span class="text-sm font-semibold text-navy-500">Asset Maintenance</span>
                   </div>
-                  <h4 class="mt-3 text-lg font-bold text-navy-900">Recover Gondhuru RO Plant performance</h4>
-                  <p class="mt-2 text-sm leading-6 text-navy-600">Gondhuru Tribal RO Plant is in amber state. Required action is to replace the RO membrane and ATW card slot.</p>
+                  <h4 class="mt-3 text-lg font-bold text-navy-900">Recover Gondhuru plant performance</h4>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">Gondhuru plant is in amber state. Required action is to replace the RO membrane and ATW card slot.</p>
                 </div>
                 <a href="#asset-health" class="quick-link section-link inline-flex items-center gap-2 rounded-xl border border-warning/20 bg-warning/5 px-4 py-2 text-sm font-semibold text-warning">
                   <i class="fa-solid fa-screwdriver-wrench"></i>
@@ -458,14 +492,14 @@
                       <span class="h-2 w-2 rounded-full bg-navy-600"></span>
                       Priority 3
                     </span>
-                    <span class="text-sm font-semibold text-navy-500">Service Continuity</span>
+                    <span class="text-sm font-semibold text-navy-500">Education Infrastructure</span>
                   </div>
-                  <h4 class="mt-3 text-lg font-bold text-navy-900">Prevent medicine stockouts at Arogya Govt Clinic (Gambheeram)</h4>
-                  <p class="mt-2 text-sm leading-6 text-navy-600">The clinic remains in amber state until a digital supply chain tablet is deployed for medicine tracking and replenishment visibility.</p>
+                  <h4 class="mt-3 text-lg font-bold text-navy-900">Start procurement for tribal education classroom upgrades</h4>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">The Hukumpeta and Neelamputtu school pilot needs benches and basic RO support to address learning gaps and classroom readiness.</p>
                 </div>
-                <a href="#healthcare" class="quick-link section-link inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-navy-50 px-4 py-2 text-sm font-semibold text-navy-700">
-                  <i class="fa-solid fa-tablet-screen-button"></i>
-                  Review healthcare module
+                <a href="#education" class="quick-link section-link inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-navy-50 px-4 py-2 text-sm font-semibold text-navy-700">
+                  <i class="fa-solid fa-school"></i>
+                  Review education details
                 </a>
               </div>
             </div>
@@ -505,10 +539,10 @@
             <div>
               <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Module A</p>
               <h3 class="mt-1 text-xl font-bold text-navy-900">Real Time Asset Health Matrix</h3>
-              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">Use this table for rapid triage of water and healthcare assets requiring maintenance, recovery, or digital enablement.</p>
+              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">Use this table for rapid triage of water assets requiring maintenance, recovery, and operator support.</p>
             </div>
             <div class="rounded-xl border border-navy-100 bg-navy-50 px-3 py-2 text-sm font-medium text-navy-700">
-              3 tracked field assets
+              2 tracked field assets
             </div>
           </div>
 
@@ -531,15 +565,18 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-navy-100 bg-white">
-                  <tr class="asset-row" data-status="amber">
+                  <tr class="asset-row" data-status="amber" title="Gondhuru plant requires RO membrane and ATW card slot replacement.">
                     <td class="px-4 py-4">
                       <span class="rounded-lg bg-warning/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-warning">P2</span>
                     </td>
                     <td class="px-4 py-4">
-                      <p class="font-semibold text-navy-900">Gondhuru Tribal RO Plant</p>
+                      <p class="font-semibold text-navy-900">Gondhuru Plant</p>
                       <p class="mt-1 text-xs uppercase tracking-[0.18em] text-navy-400">Water Infrastructure</p>
                     </td>
-                    <td class="px-4 py-4 font-medium text-navy-700">Kamayya</td>
+                    <td class="px-4 py-4">
+                      <p class="font-semibold text-navy-900">Mr. Kamayya</p>
+                      <p class="mt-1 text-xs text-navy-500">9346537507</p>
+                    </td>
                     <td class="px-4 py-4">
                       <span class="status-pill bg-warning/10 text-warning">
                         <span class="h-2 w-2 rounded-full bg-warning"></span>
@@ -548,7 +585,7 @@
                     </td>
                     <td class="px-4 py-4 text-navy-700">Replace RO membrane and ATW card slot.</td>
                   </tr>
-                  <tr class="asset-row" data-status="red">
+                  <tr class="asset-row" data-status="red" title="Valluru RO Plant is critical and offline. Requires technical repair and operator training.">
                     <td class="px-4 py-4">
                       <span class="rounded-lg bg-danger/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-danger">P1</span>
                     </td>
@@ -556,31 +593,17 @@
                       <p class="font-semibold text-navy-900">Valluru RO Plant</p>
                       <p class="mt-1 text-xs uppercase tracking-[0.18em] text-navy-400">Water Infrastructure</p>
                     </td>
-                    <td class="px-4 py-4 font-medium text-navy-700">Bhaskar</td>
+                    <td class="px-4 py-4">
+                      <p class="font-semibold text-navy-900">Mr. Bhaskar</p>
+                      <p class="mt-1 text-xs text-navy-500">9848562223</p>
+                    </td>
                     <td class="px-4 py-4">
                       <span class="status-pill bg-danger/10 text-danger">
                         <span class="h-2 w-2 rounded-full bg-danger"></span>
                         Red
                       </span>
                     </td>
-                    <td class="px-4 py-4 text-navy-700">Full technical overhaul and 1 Day Operator Training Camp.</td>
-                  </tr>
-                  <tr class="asset-row" data-status="amber">
-                    <td class="px-4 py-4">
-                      <span class="rounded-lg bg-navy-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-navy-700">P3</span>
-                    </td>
-                    <td class="px-4 py-4">
-                      <p class="font-semibold text-navy-900">Arogya Govt Clinic (Gambheeram)</p>
-                      <p class="mt-1 text-xs uppercase tracking-[0.18em] text-navy-400">Healthcare Delivery</p>
-                    </td>
-                    <td class="px-4 py-4 font-medium text-navy-700">N/A</td>
-                    <td class="px-4 py-4">
-                      <span class="status-pill bg-warning/10 text-warning">
-                        <span class="h-2 w-2 rounded-full bg-warning"></span>
-                        Amber
-                      </span>
-                    </td>
-                    <td class="px-4 py-4 text-navy-700">Deploy digital supply chain tablet to prevent medicine stockouts.</td>
+                    <td class="px-4 py-4 text-navy-700">Full technical repair and 1 day operator training camp.</td>
                   </tr>
                 </tbody>
               </table>
@@ -592,8 +615,8 @@
           <div class="flex items-center justify-between gap-3">
             <div>
               <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Module B</p>
-              <h3 class="mt-1 text-xl font-bold text-navy-900">Closed Loop Agritech &amp; Nutrition Tracker</h3>
-              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">A simple three-step workflow showing how produce preservation converts into farmer income support and nutrition delivery.</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Farm Cooling to Child Nutrition Flow</h3>
+              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">A simple three-step workflow showing how farm cooling reduces losses and supports child nutrition through weekly deliveries.</p>
             </div>
             <div class="hidden h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-success sm:flex">
               <i class="fa-solid fa-arrows-spin text-xl"></i>
@@ -608,9 +631,9 @@
                 </div>
                 <div>
                   <p class="text-sm font-semibold uppercase tracking-[0.2em] text-navy-500">Procurement</p>
-                  <p class="mt-1 text-base font-semibold text-navy-900">50 Cool Crate units deployed</p>
+                  <p class="mt-1 text-base font-semibold text-navy-900">50 ColdEasy boxes deployed</p>
                   <p class="mt-2 text-sm leading-6 text-navy-600">
-                    Rolled out to Gambheeram and Anandapuram Rythu Bazaars to stop 30 percent summer heat loss in fresh produce.
+                    Rolled out to Gambheeram and Kancharapalem Rythu Bazaars to stop 30 percent summer heat loss in fresh produce.
                   </p>
                 </div>
               </div>
@@ -629,7 +652,7 @@
                   <p class="text-sm font-semibold uppercase tracking-[0.2em] text-navy-500">Harvesting</p>
                   <p class="mt-1 text-base font-semibold text-navy-900">Fluentgrid buys preserved produce from local farmers</p>
                   <p class="mt-2 text-sm leading-6 text-navy-600">
-                    Saved produce is aggregated after market preservation, creating a direct rural procurement loop and reducing wastage.
+                    Saved produce is aggregated after market preservation, supporting farmers and reducing wastage.
                   </p>
                 </div>
               </div>
@@ -678,7 +701,7 @@
                 </div>
                 <div>
                   <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Primary NGO Partner</p>
-                  <h4 class="mt-1 text-lg font-bold text-navy-900">Sri. B.S Rao</h4>
+                  <h4 class="mt-1 text-lg font-bold text-navy-900">Mr. B.S Rao</h4>
                 </div>
               </div>
               <div class="mt-4 space-y-2 text-sm text-navy-700">
@@ -693,12 +716,31 @@
                   <i class="fa-solid fa-faucet-drip"></i>
                 </div>
                 <div>
-                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Tribal Water Partner</p>
-                  <h4 class="mt-1 text-lg font-bold text-navy-900">KV Murthy</h4>
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Tribal Area Water Projects Partner</p>
+                  <h4 class="mt-1 text-lg font-bold text-navy-900">Mr. KV Murthy</h4>
                 </div>
               </div>
               <div class="mt-4 space-y-2 text-sm text-navy-700">
                 <p><span class="font-semibold">Projects:</span> Kimudupalli PTG and Tutugummi projects</p>
+                <p><span class="font-semibold">Phone:</span> 94922 60344</p>
+              </div>
+            </article>
+
+            <article class="contact-card rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
+              <div class="flex items-center gap-3">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white">
+                  <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Agritech Cooling Partner</p>
+                  <h4 class="mt-1 text-lg font-bold text-navy-900">Mr. Vishal Singhal</h4>
+                </div>
+              </div>
+              <div class="mt-4 space-y-2 text-sm text-navy-700">
+                <p><span class="font-semibold">Vendor:</span> ColdEasy</p>
+                <p><span class="font-semibold">Website:</span> <a class="font-semibold text-navy-700 underline decoration-navy-200 underline-offset-4 hover:text-navy-900" href="https://www.coldeasy.in/products.html" target="_blank" rel="noreferrer">coldeasy.in/products.html</a></p>
+                <p><span class="font-semibold">Phone:</span> +91 91829 68542</p>
+                <p><span class="font-semibold">Email:</span> info@coldeasy.in</p>
               </div>
             </article>
           </div>
@@ -708,8 +750,8 @@
           <div class="flex items-center justify-between gap-3">
             <div>
               <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Transport Fleet</p>
-              <h3 class="mt-1 text-xl font-bold text-navy-900">Orphanage Transit Route</h3>
-              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">Verified driver list for recurring orphanage transport coordination.</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Transportation for Child Care Home</h3>
+              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">Verified driver list for recurring child care home transport coordination.</p>
             </div>
             <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
               Rs. 8,000/month
@@ -747,16 +789,77 @@
         </article>
       </section>
 
-      <section id="healthcare" class="mt-6">
+      <section id="education" class="mt-6">
+        <article class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Widget D</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Tribal Education Infrastructure</h3>
+              <p class="detail-copy mt-2 max-w-3xl text-sm leading-6 text-navy-600">
+                Locations: Govt Schools in Hukumpeta and Neelamputtu. This widget tracks classroom readiness, learning constraints, and procurement status for foundational upgrades.
+              </p>
+            </div>
+            <div class="rounded-xl border border-warning/20 bg-warning/10 px-3 py-2 text-sm font-semibold text-warning">
+              Status: Amber (Needs procurement)
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-4 xl:grid-cols-2">
+            <div class="rounded-2xl border border-navy-100 bg-white p-5 shadow-soft" title="MPPS Sanyasammapalem, Hukumpeta. UDISE 28130309301.">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Hukumpeta</p>
+                  <h4 class="mt-1 text-lg font-bold text-navy-900">MPPS Sanyasammapalem</h4>
+                  <p class="mt-2 text-sm text-navy-700"><span class="font-semibold">UDISE Code:</span> 28130309301</p>
+                </div>
+                <a class="info-button inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-navy-50 px-3 py-2 text-sm font-semibold text-navy-700" href="https://www.google.com/maps/search/?api=1&query=MPPS+Sanyasammapalem+Hukumpeta+Visakhapatnam+Andhra+Pradesh" target="_blank" rel="noreferrer" title="Open location in Google Maps">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Map
+                </a>
+              </div>
+              <div class="mt-4 space-y-2 text-sm text-navy-700">
+                <p><span class="font-semibold">Primary Contact:</span> Mr. Gedala Subbarao (Headmaster)</p>
+                <p><span class="font-semibold">Issue:</span> Severe lack of foundational classroom seating and learning gaps in English and Math due to teacher shortages.</p>
+                <p><span class="font-semibold">Solution:</span> Foundational classroom upgrades (benches and basic RO units).</p>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-navy-100 bg-white p-5 shadow-soft" title="Neelamputtu, Hukumpeta block. UDISE 28130309701.">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Neelamputtu</p>
+                  <h4 class="mt-1 text-lg font-bold text-navy-900">Govt School (Neelamputtu)</h4>
+                  <p class="mt-2 text-sm text-navy-700"><span class="font-semibold">Cluster:</span> Gtwahs (g) Guda</p>
+                  <p class="mt-1 text-sm text-navy-700"><span class="font-semibold">Block:</span> Hukumpeta</p>
+                  <p class="mt-1 text-sm text-navy-700"><span class="font-semibold">District:</span> Visakhapatnam</p>
+                  <p class="mt-1 text-sm text-navy-700"><span class="font-semibold">State:</span> Andhra Pradesh</p>
+                  <p class="mt-2 text-sm text-navy-700"><span class="font-semibold">UDISE Code:</span> 28130309701</p>
+                </div>
+                <a class="info-button inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-navy-50 px-3 py-2 text-sm font-semibold text-navy-700" href="https://www.google.com/maps/search/?api=1&query=Neelamputtu+Hukumpeta+Visakhapatnam+Andhra+Pradesh" target="_blank" rel="noreferrer" title="Open location in Google Maps">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Map
+                </a>
+              </div>
+              <div class="mt-4 space-y-2 text-sm text-navy-700">
+                <p><span class="font-semibold">Primary Contact:</span> Ms. Konda Parvathi (Headmaster)</p>
+                <p><span class="font-semibold">Issue:</span> Severe lack of foundational classroom seating and learning gaps in English and Math due to teacher shortages.</p>
+                <p><span class="font-semibold">Solution:</span> Foundational classroom upgrades (benches and basic RO units).</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="impact" class="mt-6">
         <article class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
           <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Module D</p>
-              <h3 class="mt-1 text-xl font-bold text-navy-900">Data Visualization</h3>
-              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">These charts support budget and impact discussions after operational priorities are reviewed.</p>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Impact Overview</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Spend and reach, in one view</h3>
+              <p class="detail-copy mt-2 text-sm leading-6 text-navy-600">Use these charts to explain where funds are going and how reach is distributed across water, farmers, education, and child care.</p>
             </div>
             <div class="text-sm text-navy-600">
-              Comparative impact monitoring for water, nutrition, healthcare, and mobility programs
+              Review after operational priorities and partner movement are confirmed
             </div>
           </div>
 
@@ -766,9 +869,6 @@
                 <div>
                   <p class="text-sm font-semibold text-navy-500">Chart 1</p>
                   <h4 class="text-lg font-bold text-navy-900">Social ROI vs Financial Outlay</h4>
-                </div>
-                <div class="rounded-xl bg-navy-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-navy-600">
-                  Comparative Bar Chart
                 </div>
               </div>
               <div class="chart-shell mt-4">
@@ -782,9 +882,6 @@
                   <p class="text-sm font-semibold text-navy-500">Chart 2</p>
                   <h4 class="text-lg font-bold text-navy-900">Beneficiary Distribution</h4>
                 </div>
-                <div class="rounded-xl bg-navy-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-navy-600">
-                  Doughnut Chart
-                </div>
               </div>
               <div class="chart-shell mt-4">
                 <canvas id="beneficiaryChart"></canvas>
@@ -796,6 +893,110 @@
     </main>
   </div>
 
+  <div id="beneficiariesModal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-6">
+    <div class="modal-backdrop absolute inset-0" data-modal-close></div>
+    <div class="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/70 bg-white shadow-panel">
+      <div class="flex items-start justify-between gap-4 border-b border-navy-100 bg-navy-50 px-6 py-5">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Active Beneficiaries</p>
+          <h3 class="mt-1 text-xl font-bold text-navy-900">Cluster breakdown (6)</h3>
+          <p class="mt-2 text-sm text-navy-600">Counts reflect verified field reach and program catchment.</p>
+        </div>
+        <button type="button" class="info-button inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-white px-3 py-2 text-sm font-semibold text-navy-700" data-modal-close>
+          <i class="fa-solid fa-xmark"></i>
+          Close
+        </button>
+      </div>
+      <div class="px-6 py-5">
+        <div class="grid gap-3 md:grid-cols-2">
+          <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft" title="Water catchment reach">
+            <p class="text-sm font-semibold text-navy-900">Valluru Village &amp; Surrounding Catchment</p>
+            <p class="mt-2 text-2xl font-extrabold text-navy-900">800</p>
+            <p class="text-sm text-navy-600">Individuals</p>
+          </div>
+          <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft" title="Water reach">
+            <p class="text-sm font-semibold text-navy-900">Gondhuru Village</p>
+            <p class="mt-2 text-2xl font-extrabold text-navy-900">300</p>
+            <p class="text-sm text-navy-600">Individuals</p>
+          </div>
+          <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft" title="Farmers supported through Rythu Bazaar flow">
+            <p class="text-sm font-semibold text-navy-900">Gambheeram Rythu Bazaar Farmers</p>
+            <p class="mt-2 text-2xl font-extrabold text-navy-900">150</p>
+            <p class="text-sm text-navy-600">Individuals</p>
+          </div>
+          <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft" title="Farmers supported through Rythu Bazaar flow">
+            <p class="text-sm font-semibold text-navy-900">Kancharapalem Rythu Bazaar Farmers</p>
+            <p class="mt-2 text-2xl font-extrabold text-navy-900">150</p>
+            <p class="text-sm text-navy-600">Individuals</p>
+          </div>
+          <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft" title="School support reach">
+            <p class="text-sm font-semibold text-navy-900">Tribal Govt Schools (Hukumpeta &amp; Neelamputtu)</p>
+            <p class="mt-2 text-2xl font-extrabold text-navy-900">100</p>
+            <p class="text-sm text-navy-600">Students</p>
+          </div>
+          <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft" title="Child care home reach">
+            <p class="text-sm font-semibold text-navy-900">Krupa Sadhana Child Care Home</p>
+            <p class="mt-2 text-2xl font-extrabold text-navy-900">50</p>
+            <p class="text-sm text-navy-600">Children and staff</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="budgetModal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-6">
+    <div class="modal-backdrop absolute inset-0" data-modal-close></div>
+    <div class="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/70 bg-white shadow-panel">
+      <div class="flex items-start justify-between gap-4 border-b border-navy-100 bg-navy-50 px-6 py-5">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Current Quarter Budget Deployed</p>
+          <h3 class="mt-1 text-xl font-bold text-navy-900">Budget basis (Rs. 1,25,000)</h3>
+          <p class="mt-2 text-sm text-navy-600">This breakdown is used to justify the quarter spend shown on the dashboard.</p>
+        </div>
+        <button type="button" class="info-button inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-white px-3 py-2 text-sm font-semibold text-navy-700" data-modal-close>
+          <i class="fa-solid fa-xmark"></i>
+          Close
+        </button>
+      </div>
+      <div class="px-6 py-5">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+            <div>
+              <p class="text-sm font-semibold text-navy-900">Gondhuru Water Plant Hardware Fixes</p>
+              <p class="mt-1 text-sm text-navy-600">RO membrane and ATW card slot scope</p>
+            </div>
+            <p class="text-lg font-extrabold text-navy-900">Rs. 30,000</p>
+          </div>
+          <div class="flex items-center justify-between rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+            <div>
+              <p class="text-sm font-semibold text-navy-900">Child Care Home Transportation</p>
+              <p class="mt-1 text-sm text-navy-600">3 months at Rs. 8,000/month</p>
+            </div>
+            <p class="text-lg font-extrabold text-navy-900">Rs. 24,000</p>
+          </div>
+          <div class="flex items-center justify-between rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+            <div>
+              <p class="text-sm font-semibold text-navy-900">Agritech Cooling Pilot</p>
+              <p class="mt-1 text-sm text-navy-600">50 ColdEasy boxes at Rs. 1,000/each</p>
+            </div>
+            <p class="text-lg font-extrabold text-navy-900">Rs. 50,000</p>
+          </div>
+          <div class="flex items-center justify-between rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+            <div>
+              <p class="text-sm font-semibold text-navy-900">Tribal Education Classroom Upgrades</p>
+              <p class="mt-1 text-sm text-navy-600">Benches and filters pilot</p>
+            </div>
+            <p class="text-lg font-extrabold text-navy-900">Rs. 21,000</p>
+          </div>
+          <div class="flex items-center justify-between rounded-2xl border border-navy-900 bg-navy-900 p-4 text-white shadow-soft">
+            <p class="text-sm font-semibold">Total</p>
+            <p class="text-lg font-extrabold">Rs. 1,25,000</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const tooltipTitleColor = "#091b2d";
     const tooltipBodyColor = "#214d79";
@@ -803,7 +1004,7 @@
     const presentationToggle = document.getElementById("presentationToggle");
     const printDashboard = document.getElementById("printDashboard");
     const sectionLinks = Array.from(document.querySelectorAll(".section-link"));
-    const observedSections = ["overview", "priority-actions", "asset-health", "agritech", "logistics", "healthcare", "vendors"]
+    const observedSections = ["overview", "priority-actions", "asset-health", "agritech", "education", "logistics", "vendors", "impact"]
       .map((id) => document.getElementById(id))
       .filter(Boolean);
 
@@ -845,6 +1046,39 @@
       printDashboard.addEventListener("click", () => window.print());
     }
 
+    const modalTargets = Array.from(document.querySelectorAll("[data-modal-target]"));
+    const modalClosers = Array.from(document.querySelectorAll("[data-modal-close]"));
+
+    const openModal = (modalId) => {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeAllModals = () => {
+      ["beneficiariesModal", "budgetModal"].forEach((id) => {
+        const modal = document.getElementById(id);
+        if (!modal) return;
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      });
+      document.body.style.overflow = "";
+    };
+
+    modalTargets.forEach((button) => {
+      button.addEventListener("click", () => openModal(button.dataset.modalTarget));
+    });
+
+    modalClosers.forEach((button) => {
+      button.addEventListener("click", () => closeAllModals());
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeAllModals();
+    });
+
     const assetRows = Array.from(document.querySelectorAll(".asset-row"));
     const filterChips = Array.from(document.querySelectorAll(".filter-chip"));
 
@@ -866,10 +1100,10 @@
       data: {
         labels: [
           "Valluru RO",
-          "Gondhuru RO",
-          "Orphanage Transit",
-          "Cool Crate Pilot",
-          "Arogya Tablet"
+          "Gondhuru Plant",
+          "Child Care Home Transport",
+          "Agritech Cooling Pilot",
+          "Tribal Ed Support"
         ],
         datasets: [
           {
@@ -949,13 +1183,13 @@
       type: "doughnut",
       data: {
         labels: [
-          "Scheduled Tribes (Water)",
-          "Orphans (Education/Transit)",
-          "Farmers (Agritech)",
-          "Elderly/Patients (Healthcare)"
+          "Scheduled tribe communities (water)",
+          "Child care home (transport)",
+          "Farmers (agritech)",
+          "Students (education)"
         ],
         datasets: [{
-          data: [520, 280, 430, 270],
+          data: [1100, 50, 300, 100],
           backgroundColor: ["#163a5d", "#059669", "#d97706", "#366b9f"],
           borderColor: "#ffffff",
           borderWidth: 4,

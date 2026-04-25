@@ -1,6 +1,6 @@
 # Fluentgrid CSR Intelligence Hub (FY 2026)
 
-Operational CSR dashboard for rural asset health, logistics tracking, agritech workflow monitoring, healthcare readiness, and budget deployment at Fluentgrid Limited.
+Operational CSR dashboard for rural asset health, logistics tracking, farm cooling supply flow, education infrastructure support, and budget deployment at Fluentgrid Limited.
 
 ## Live Demo
 
@@ -14,13 +14,14 @@ It was conceptualized as a practical decision-support interface for Fluentgrid L
 
 ## Core Modules
 
-- Overview with KPI strip for uptime, beneficiaries, budget deployed, and critical alerts
+- Overview with KPI strip for water plants running, beneficiaries, budget deployed, and critical alerts
 - Priority action queue for daily operational review
-- Real Time Asset Health Matrix for rural water and healthcare infrastructure
-- Closed Loop Agritech and Nutrition Tracker
-- Logistics and Vendor Directory with verified contacts
-- Transport Fleet panel for orphanage transit coordination
-- Data visualization layer for Social ROI and beneficiary distribution
+- Real Time Asset Health Matrix for rural water infrastructure
+- Farm cooling to child nutrition flow (Agritech supply chain)
+- Field partners directory with verified contacts
+- Transportation for child care home (driver grid)
+- Tribal education infrastructure widget (Hukumpeta and Neelamputtu)
+- Impact overview charts for spend and beneficiary distribution
 
 ## Features
 
@@ -43,8 +44,9 @@ It was conceptualized as a practical decision-support interface for Fluentgrid L
 
 This dashboard is intended for CSR leadership, operations teams, and field coordination staff who need a simple but professional interface to:
 
-- monitor rural RO plant and clinic readiness
-- track agritech and nutrition workflow outcomes
+- monitor rural RO plant readiness
+- track farm cooling and nutrition flow outcomes
+- track education infrastructure needs in remote locations
 - coordinate vendors, NGOs, and transport partners
 - communicate social impact and budget efficiency to management
 
@@ -58,6 +60,8 @@ This dashboard is intended for CSR leadership, operations teams, and field coord
 
 This project is designed to be hosted easily with GitHub Pages from the repository root.
 
-## Author
+## Created By
 
-Prepared for Fluentgrid Limited CSR operations.
+Created by Ankur Tadipatri, CSR Intern, Fluentgrid Limited.
+
+Second year BBA student, IPM Programme, IIM Bodh Gaya.
