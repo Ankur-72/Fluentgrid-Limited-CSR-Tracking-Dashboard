@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluentgrid Limited CSR Operations Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50: "#f4f8fc",
+              100: "#e5eef7",
+              200: "#c8d8eb",
+              300: "#97b7d7",
+              400: "#5f8fbe",
+              500: "#366b9f",
+              600: "#214d79",
+              700: "#183a5d",
+              800: "#0f2740",
+              900: "#091b2d"
+            },
+            success: "#059669",
+            warning: "#d97706",
+            danger: "#b91c1c"
+          },
+          boxShadow: {
+            panel: "0 10px 30px rgba(9, 27, 45, 0.08)",
+            soft: "0 6px 18px rgba(15, 39, 64, 0.08)"
+          },
+          fontFamily: {
+            sans: ["Public Sans", "Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    body {
+      font-family: "Public Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(54, 107, 159, 0.12), transparent 28%),
+        linear-gradient(180deg, #f4f8fc 0%, #eef4fa 100%);
+    }
+
+    .panel-glass {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .metric-card,
+    .module-card,
+    .nav-item,
+    .contact-card,
+    .driver-row,
+    .workflow-step,
+    .asset-row {
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .metric-card:hover,
+    .module-card:hover,
+    .contact-card:hover,
+    .workflow-step:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(15, 39, 64, 0.12);
+    }
+
+    .nav-item:hover,
+    .asset-row:hover,
+    .driver-row:hover {
+      background-color: rgba(229, 238, 247, 0.9);
+    }
+
+    .nav-item.active-nav {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+
+    .quick-link {
+      transition: all 180ms ease;
+    }
+
+    .quick-link:hover,
+    .quick-link.active-section {
+      background-color: #091b2d;
+      color: #ffffff;
+      border-color: #091b2d;
+    }
+
+    .filter-chip {
+      transition: all 180ms ease;
+    }
+
+    .filter-chip.active-filter {
+      background-color: #091b2d;
+      color: #ffffff;
+      border-color: #091b2d;
+    }
+
+    .chart-shell {
+      position: relative;
+      min-height: 320px;
+    }
+
+    .chart-shell canvas {
+      max-height: 340px;
+    }
+  </style>
+</head>
+<body class="text-navy-900">
+  <div class="min-h-screen lg:flex">
+    <aside class="w-full border-b border-navy-100 bg-navy-900 px-5 py-6 text-white lg:sticky lg:top-0 lg:h-screen lg:w-72 lg:border-b-0 lg:border-r lg:border-navy-800">
+      <div class="flex items-center gap-3 border-b border-navy-800 pb-5">
+        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-xl">
+          <i class="fa-solid fa-industry"></i>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-200">Fluentgrid Limited</p>
+          <h1 class="text-lg font-bold">CSR Operations Dashboard</h1>
+        </div>
+      </div>
+
+      <nav class="mt-6 space-y-2">
+        <a href="#overview" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-chart-line w-5"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#asset-health" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-droplet w-5"></i>
+          <span>Asset Health (RO Plants)</span>
+        </a>
+        <a href="#logistics" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-truck-fast w-5"></i>
+          <span>Logistics &amp; Transport</span>
+        </a>
+        <a href="#agritech" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-seedling w-5"></i>
+          <span>Agritech Supply Chain</span>
+        </a>
+        <a href="#healthcare" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-heart-pulse w-5"></i>
+          <span>Healthcare</span>
+        </a>
+        <a href="#vendors" class="nav-item section-link flex items-center gap-3 rounded-xl border border-transparent px-4 py-3 text-sm font-medium text-white/90 hover:border-white/10 hover:text-white">
+          <i class="fa-solid fa-address-book w-5"></i>
+          <span>Vendor Directory</span>
+        </a>
+      </nav>
+
+      <div class="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-200">Operational Focus</p>
+        <ul class="mt-3 space-y-3 text-sm text-navy-100">
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-circle-exclamation mt-1 text-danger"></i>
+            <span>1 critical groundwater alert requiring escalation</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-wrench mt-1 text-warning"></i>
+            <span>Maintenance backlog concentrated in rural water assets</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-hand-holding-heart mt-1 text-emerald-400"></i>
+            <span>Low-cost transit and agritech pilots driving strong social impact</span>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="flex-1 px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
+      <section class="sticky top-0 z-20 mb-4 rounded-2xl border border-white/80 bg-white/90 p-3 shadow-soft backdrop-blur">
+        <div class="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+          <div class="flex items-center gap-3 text-sm text-navy-600">
+            <span class="rounded-full bg-navy-100 px-3 py-1 font-semibold text-navy-700">Operational Navigation</span>
+            <span>Jump directly to the module you need without losing context.</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a href="#overview" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Overview</a>
+            <a href="#priority-actions" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Priority Actions</a>
+            <a href="#asset-health" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Asset Health</a>
+            <a href="#agritech" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Agritech</a>
+            <a href="#logistics" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Logistics</a>
+            <a href="#healthcare" class="quick-link section-link rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700">Impact Analytics</a>
+          </div>
+        </div>
+      </section>
+
+      <header id="overview" class="panel-glass rounded-3xl border border-white/70 px-5 py-5 shadow-panel sm:px-6">
+        <div class="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-navy-500">Corporate Social Responsibility Control Center</p>
+            <h2 class="mt-2 text-2xl font-bold tracking-tight text-navy-900 sm:text-3xl">Rural operations, supply chain, and budget deployment at a glance</h2>
+            <p class="mt-3 max-w-3xl text-sm leading-6 text-navy-600">
+              Active operational dashboard conceptualized by management intern Ankur Tadipatri for real-time monitoring of water assets, logistics coordination, agritech throughput, healthcare readiness, and CSR budget deployment.
+            </p>
+          </div>
+          <div class="flex min-w-0 flex-col gap-3 rounded-2xl border border-navy-100 bg-navy-50 px-4 py-4 sm:min-w-[290px]">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Active User</p>
+                <p class="mt-1 text-lg font-bold text-navy-900">Mr. Ravi Kanth</p>
+                <p class="text-sm text-navy-600">Senior Manager, CSV</p>
+              </div>
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-navy-900 text-white">
+                <i class="fa-solid fa-user-tie text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 rounded-xl border border-danger/20 bg-danger/5 px-3 py-2 text-sm font-semibold text-danger">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>Red Alert: Valluru Groundwater Contamination</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="mt-6 grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
+          <article class="metric-card rounded-2xl border border-warning/20 bg-white p-5 shadow-soft">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-semibold text-navy-600">Asset Uptime</p>
+              <span class="status-pill bg-warning/10 text-warning">
+                <span class="h-2 w-2 rounded-full bg-warning"></span>
+                Warning
+              </span>
+            </div>
+            <div class="mt-4 flex items-end justify-between gap-3">
+              <div>
+                <p class="text-3xl font-extrabold text-navy-900">50%</p>
+                <p class="mt-1 text-sm text-navy-500">Valluru offline is suppressing network reliability</p>
+              </div>
+              <i class="fa-solid fa-gauge-high text-3xl text-warning"></i>
+            </div>
+          </article>
+
+          <article class="metric-card rounded-2xl border border-emerald-200 bg-white p-5 shadow-soft">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-semibold text-navy-600">Active Beneficiaries</p>
+              <span class="status-pill bg-emerald-50 text-success">
+                <span class="h-2 w-2 rounded-full bg-success"></span>
+                Healthy
+              </span>
+            </div>
+            <div class="mt-4 flex items-end justify-between gap-3">
+              <div>
+                <p class="text-3xl font-extrabold text-navy-900">1,500+</p>
+                <p class="mt-1 text-sm text-navy-500">Reach distributed across 6 operational clusters</p>
+              </div>
+              <i class="fa-solid fa-users text-3xl text-success"></i>
+            </div>
+          </article>
+
+          <article class="metric-card rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-semibold text-navy-600">Current Quarter Budget Deployed</p>
+              <span class="status-pill bg-navy-100 text-navy-700">
+                <span class="h-2 w-2 rounded-full bg-navy-600"></span>
+                On Track
+              </span>
+            </div>
+            <div class="mt-4 flex items-end justify-between gap-3">
+              <div>
+                <p class="text-3xl font-extrabold text-navy-900">Rs. 1,25,000</p>
+                <p class="mt-1 text-sm text-navy-500">Allocated across asset recovery, transport, and pilots</p>
+              </div>
+              <i class="fa-solid fa-wallet text-3xl text-navy-700"></i>
+            </div>
+          </article>
+
+          <article class="metric-card rounded-2xl border border-danger/20 bg-white p-5 shadow-soft">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-semibold text-navy-600">Critical Alerts</p>
+              <span class="status-pill bg-danger/10 text-danger">
+                <span class="h-2 w-2 rounded-full bg-danger"></span>
+                Immediate
+              </span>
+            </div>
+            <div class="mt-4 flex items-end justify-between gap-3">
+              <div>
+                <p class="text-3xl font-extrabold text-navy-900">1</p>
+                <p class="mt-1 text-sm text-navy-500">Groundwater contamination and prolonged RO downtime at Valluru</p>
+              </div>
+              <i class="fa-solid fa-triangle-exclamation text-3xl text-danger"></i>
+            </div>
+          </article>
+        </section>
+      </header>
+
+      <section id="priority-actions" class="mt-6 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+        <article class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Operations Priorities</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">What the CSR team should act on first</h3>
+              <p class="mt-2 text-sm leading-6 text-navy-600">This queue translates the raw dashboard data into an immediate decision layer for daily reviews and weekly field coordination.</p>
+            </div>
+            <div class="rounded-xl border border-navy-100 bg-navy-50 px-3 py-2 text-sm font-medium text-navy-700">
+              Ordered by operational urgency
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-4">
+            <div class="rounded-2xl border border-danger/20 bg-white p-4 shadow-soft">
+              <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="status-pill bg-danger/10 text-danger">
+                      <span class="h-2 w-2 rounded-full bg-danger"></span>
+                      Priority 1
+                    </span>
+                    <span class="text-sm font-semibold text-navy-500">Water Infrastructure</span>
+                  </div>
+                  <h4 class="mt-3 text-lg font-bold text-navy-900">Restore Valluru RO Plant and address contamination risk</h4>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">Valluru RO Plant remains offline and carries the only red alert in the system. Required action is a full technical overhaul and 1 Day Operator Training Camp.</p>
+                </div>
+                <a href="#asset-health" class="quick-link section-link inline-flex items-center gap-2 rounded-xl border border-danger/20 bg-danger/5 px-4 py-2 text-sm font-semibold text-danger">
+                  <i class="fa-solid fa-arrow-right"></i>
+                  Review asset status
+                </a>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-warning/20 bg-white p-4 shadow-soft">
+              <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="status-pill bg-warning/10 text-warning">
+                      <span class="h-2 w-2 rounded-full bg-warning"></span>
+                      Priority 2
+                    </span>
+                    <span class="text-sm font-semibold text-navy-500">Asset Maintenance</span>
+                  </div>
+                  <h4 class="mt-3 text-lg font-bold text-navy-900">Recover Gondhuru RO Plant performance</h4>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">Gondhuru Tribal RO Plant is in amber state. Required action is to replace the RO membrane and ATW card slot.</p>
+                </div>
+                <a href="#asset-health" class="quick-link section-link inline-flex items-center gap-2 rounded-xl border border-warning/20 bg-warning/5 px-4 py-2 text-sm font-semibold text-warning">
+                  <i class="fa-solid fa-screwdriver-wrench"></i>
+                  Open maintenance view
+                </a>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+              <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="status-pill bg-navy-100 text-navy-700">
+                      <span class="h-2 w-2 rounded-full bg-navy-600"></span>
+                      Priority 3
+                    </span>
+                    <span class="text-sm font-semibold text-navy-500">Service Continuity</span>
+                  </div>
+                  <h4 class="mt-3 text-lg font-bold text-navy-900">Prevent medicine stockouts at Arogya Govt Clinic (Gambheeram)</h4>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">The clinic remains in amber state until a digital supply chain tablet is deployed for medicine tracking and replenishment visibility.</p>
+                </div>
+                <a href="#healthcare" class="quick-link section-link inline-flex items-center gap-2 rounded-xl border border-navy-200 bg-navy-50 px-4 py-2 text-sm font-semibold text-navy-700">
+                  <i class="fa-solid fa-tablet-screen-button"></i>
+                  Review healthcare module
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Reading Guide</p>
+            <h3 class="mt-1 text-xl font-bold text-navy-900">How to use this dashboard quickly</h3>
+          </div>
+
+          <div class="mt-5 space-y-4">
+            <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+              <p class="text-sm font-semibold text-navy-900">1. Start with the priority queue</p>
+              <p class="mt-2 text-sm leading-6 text-navy-600">Use the action layer first if you need to decide what the team should handle today.</p>
+            </div>
+            <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+              <p class="text-sm font-semibold text-navy-900">2. Use the asset filter chips</p>
+              <p class="mt-2 text-sm leading-6 text-navy-600">Switch between all, critical, and warning assets to reduce clutter during field review calls.</p>
+            </div>
+            <div class="rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+              <p class="text-sm font-semibold text-navy-900">3. Use logistics cards for immediate outreach</p>
+              <p class="mt-2 text-sm leading-6 text-navy-600">Vendor and fleet contacts are grouped together so transport and partner coordination is one click away.</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 shadow-soft">
+              <p class="text-sm font-semibold text-navy-900">4. Use charts for budget conversations</p>
+              <p class="mt-2 text-sm leading-6 text-navy-700">The impact charts are positioned at the bottom for executive review after operational status is understood.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-6 grid gap-6 2xl:grid-cols-[1.45fr_1fr]">
+        <article id="asset-health" class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Module A</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Real Time Asset Health Matrix</h3>
+              <p class="mt-2 text-sm leading-6 text-navy-600">Use this table for rapid triage of water and healthcare assets requiring maintenance, recovery, or digital enablement.</p>
+            </div>
+            <div class="rounded-xl border border-navy-100 bg-navy-50 px-3 py-2 text-sm font-medium text-navy-700">
+              3 tracked field assets
+            </div>
+          </div>
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            <button type="button" class="filter-chip active-filter rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700" data-filter="all">All Assets</button>
+            <button type="button" class="filter-chip rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700" data-filter="red">Critical Only</button>
+            <button type="button" class="filter-chip rounded-full border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-700" data-filter="amber">Warning Only</button>
+          </div>
+
+          <div class="mt-5 overflow-hidden rounded-2xl border border-navy-100">
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-left text-sm">
+                <thead class="bg-navy-900 text-white">
+                  <tr>
+                    <th class="px-4 py-4 font-semibold">Priority</th>
+                    <th class="px-4 py-4 font-semibold">Asset</th>
+                    <th class="px-4 py-4 font-semibold">Operator</th>
+                    <th class="px-4 py-4 font-semibold">Status</th>
+                    <th class="px-4 py-4 font-semibold">Action Required</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-navy-100 bg-white">
+                  <tr class="asset-row" data-status="amber">
+                    <td class="px-4 py-4">
+                      <span class="rounded-lg bg-warning/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-warning">P2</span>
+                    </td>
+                    <td class="px-4 py-4">
+                      <p class="font-semibold text-navy-900">Gondhuru Tribal RO Plant</p>
+                      <p class="mt-1 text-xs uppercase tracking-[0.18em] text-navy-400">Water Infrastructure</p>
+                    </td>
+                    <td class="px-4 py-4 font-medium text-navy-700">Kamayya</td>
+                    <td class="px-4 py-4">
+                      <span class="status-pill bg-warning/10 text-warning">
+                        <span class="h-2 w-2 rounded-full bg-warning"></span>
+                        Amber
+                      </span>
+                    </td>
+                    <td class="px-4 py-4 text-navy-700">Replace RO membrane and ATW card slot.</td>
+                  </tr>
+                  <tr class="asset-row" data-status="red">
+                    <td class="px-4 py-4">
+                      <span class="rounded-lg bg-danger/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-danger">P1</span>
+                    </td>
+                    <td class="px-4 py-4">
+                      <p class="font-semibold text-navy-900">Valluru RO Plant</p>
+                      <p class="mt-1 text-xs uppercase tracking-[0.18em] text-navy-400">Water Infrastructure</p>
+                    </td>
+                    <td class="px-4 py-4 font-medium text-navy-700">Bhaskar</td>
+                    <td class="px-4 py-4">
+                      <span class="status-pill bg-danger/10 text-danger">
+                        <span class="h-2 w-2 rounded-full bg-danger"></span>
+                        Red
+                      </span>
+                    </td>
+                    <td class="px-4 py-4 text-navy-700">Full technical overhaul and 1 Day Operator Training Camp.</td>
+                  </tr>
+                  <tr class="asset-row" data-status="amber">
+                    <td class="px-4 py-4">
+                      <span class="rounded-lg bg-navy-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-navy-700">P3</span>
+                    </td>
+                    <td class="px-4 py-4">
+                      <p class="font-semibold text-navy-900">Arogya Govt Clinic (Gambheeram)</p>
+                      <p class="mt-1 text-xs uppercase tracking-[0.18em] text-navy-400">Healthcare Delivery</p>
+                    </td>
+                    <td class="px-4 py-4 font-medium text-navy-700">N/A</td>
+                    <td class="px-4 py-4">
+                      <span class="status-pill bg-warning/10 text-warning">
+                        <span class="h-2 w-2 rounded-full bg-warning"></span>
+                        Amber
+                      </span>
+                    </td>
+                    <td class="px-4 py-4 text-navy-700">Deploy digital supply chain tablet to prevent medicine stockouts.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article id="agritech" class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Module B</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Closed Loop Agritech &amp; Nutrition Tracker</h3>
+              <p class="mt-2 text-sm leading-6 text-navy-600">A simple three-step workflow showing how produce preservation converts into farmer income support and nutrition delivery.</p>
+            </div>
+            <div class="hidden h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-success sm:flex">
+              <i class="fa-solid fa-arrows-spin text-xl"></i>
+            </div>
+          </div>
+
+          <div class="mt-5 space-y-4">
+            <div class="workflow-step rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+              <div class="flex items-start gap-4">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-navy-900 text-white">
+                  <span class="text-sm font-bold">1</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold uppercase tracking-[0.2em] text-navy-500">Procurement</p>
+                  <p class="mt-1 text-base font-semibold text-navy-900">50 Cool Crate units deployed</p>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">
+                    Rolled out to Gambheeram and Anandapuram Rythu Bazaars to stop 30 percent summer heat loss in fresh produce.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-center text-navy-300">
+              <i class="fa-solid fa-arrow-down text-lg"></i>
+            </div>
+
+            <div class="workflow-step rounded-2xl border border-navy-100 bg-white p-4 shadow-soft">
+              <div class="flex items-start gap-4">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-navy-700 text-white">
+                  <span class="text-sm font-bold">2</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold uppercase tracking-[0.2em] text-navy-500">Harvesting</p>
+                  <p class="mt-1 text-base font-semibold text-navy-900">Fluentgrid buys preserved produce from local farmers</p>
+                  <p class="mt-2 text-sm leading-6 text-navy-600">
+                    Saved produce is aggregated after market preservation, creating a direct rural procurement loop and reducing wastage.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-center text-navy-300">
+              <i class="fa-solid fa-arrow-down text-lg"></i>
+            </div>
+
+            <div class="workflow-step rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 shadow-soft">
+              <div class="flex items-start gap-4">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-success text-white">
+                  <span class="text-sm font-bold">3</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">Distribution</p>
+                  <p class="mt-1 text-base font-semibold text-navy-900">Weekly delivery to Krupa Sadhana Charitable Trust</p>
+                  <p class="mt-2 text-sm leading-6 text-navy-700">
+                    Fresh produce is delivered weekly to Krupa Sadhana Charitable Trust to support orphan nutrition at the last mile.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="logistics" class="mt-6 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+        <article id="vendors" class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Module C</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Logistics &amp; Vendor Directory</h3>
+              <p class="mt-2 text-sm leading-6 text-navy-600">Key partner and transport contacts are grouped here for immediate coordination during operations reviews.</p>
+            </div>
+            <div class="rounded-xl border border-navy-100 bg-navy-50 px-3 py-2 text-sm font-medium text-navy-700">
+              Verified operating contacts
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-4 md:grid-cols-2">
+            <article class="contact-card rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
+              <div class="flex items-center gap-3">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-navy-900 text-white">
+                  <i class="fa-solid fa-handshake-angle"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Primary NGO Partner</p>
+                  <h4 class="mt-1 text-lg font-bold text-navy-900">Sri. B.S Rao</h4>
+                </div>
+              </div>
+              <div class="mt-4 space-y-2 text-sm text-navy-700">
+                <p><span class="font-semibold">Organization:</span> Krupa Sadhana Trust</p>
+                <p><span class="font-semibold">Phone:</span> 70133 47587</p>
+              </div>
+            </article>
+
+            <article class="contact-card rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
+              <div class="flex items-center gap-3">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-navy-700 text-white">
+                  <i class="fa-solid fa-faucet-drip"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-navy-500">Tribal Water Partner</p>
+                  <h4 class="mt-1 text-lg font-bold text-navy-900">KV Murthy</h4>
+                </div>
+              </div>
+              <div class="mt-4 space-y-2 text-sm text-navy-700">
+                <p><span class="font-semibold">Projects:</span> Kimudupalli PTG and Tutugummi projects</p>
+              </div>
+            </article>
+          </div>
+        </article>
+
+        <article class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Transport Fleet</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Orphanage Transit Route</h3>
+              <p class="mt-2 text-sm leading-6 text-navy-600">Verified driver list for recurring orphanage transport coordination.</p>
+            </div>
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
+              Rs. 8,000/month
+            </div>
+          </div>
+
+          <div class="mt-5 overflow-hidden rounded-2xl border border-navy-100 bg-white">
+            <div class="grid grid-cols-[1fr_auto] bg-navy-900 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white">
+              <span>Verified Driver</span>
+              <span>Phone</span>
+            </div>
+            <div class="divide-y divide-navy-100">
+              <div class="driver-row grid grid-cols-[1fr_auto] gap-3 px-4 py-4 text-sm text-navy-700">
+                <span class="font-semibold text-navy-900">Vasu</span>
+                <span>9705200239</span>
+              </div>
+              <div class="driver-row grid grid-cols-[1fr_auto] gap-3 px-4 py-4 text-sm text-navy-700">
+                <span class="font-semibold text-navy-900">Chinna Yadav</span>
+                <span>9381686814</span>
+              </div>
+              <div class="driver-row grid grid-cols-[1fr_auto] gap-3 px-4 py-4 text-sm text-navy-700">
+                <span class="font-semibold text-navy-900">Santosh</span>
+                <span>9908671157</span>
+              </div>
+              <div class="driver-row grid grid-cols-[1fr_auto] gap-3 px-4 py-4 text-sm text-navy-700">
+                <span class="font-semibold text-navy-900">Narsing Rao</span>
+                <span>6304974420</span>
+              </div>
+              <div class="driver-row grid grid-cols-[1fr_auto] gap-3 px-4 py-4 text-sm text-navy-700">
+                <span class="font-semibold text-navy-900">Suri Babu</span>
+                <span>9290584575</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="healthcare" class="mt-6">
+        <article class="module-card panel-glass rounded-3xl border border-white/70 p-5 shadow-panel sm:p-6">
+          <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-navy-500">Module D</p>
+              <h3 class="mt-1 text-xl font-bold text-navy-900">Data Visualization</h3>
+              <p class="mt-2 text-sm leading-6 text-navy-600">These charts support budget and impact discussions after operational priorities are reviewed.</p>
+            </div>
+            <div class="text-sm text-navy-600">
+              Comparative impact monitoring for water, nutrition, healthcare, and mobility programs
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-6 xl:grid-cols-2">
+            <div class="rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold text-navy-500">Chart 1</p>
+                  <h4 class="text-lg font-bold text-navy-900">Social ROI vs Financial Outlay</h4>
+                </div>
+                <div class="rounded-xl bg-navy-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-navy-600">
+                  Comparative Bar Chart
+                </div>
+              </div>
+              <div class="chart-shell mt-4">
+                <canvas id="roiChart"></canvas>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-navy-100 bg-white p-5 shadow-soft">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold text-navy-500">Chart 2</p>
+                  <h4 class="text-lg font-bold text-navy-900">Beneficiary Distribution</h4>
+                </div>
+                <div class="rounded-xl bg-navy-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-navy-600">
+                  Doughnut Chart
+                </div>
+              </div>
+              <div class="chart-shell mt-4">
+                <canvas id="beneficiaryChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const tooltipTitleColor = "#091b2d";
+    const tooltipBodyColor = "#214d79";
+    const gridColor = "rgba(15, 39, 64, 0.08)";
+    const sectionLinks = Array.from(document.querySelectorAll(".section-link"));
+    const observedSections = ["overview", "priority-actions", "asset-health", "agritech", "logistics", "healthcare", "vendors"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    const setActiveSection = (id) => {
+      sectionLinks.forEach((link) => {
+        const isMatch = link.getAttribute("href") === `#${id}`;
+        link.classList.toggle("active-nav", isMatch && link.classList.contains("nav-item"));
+        link.classList.toggle("active-section", isMatch && link.classList.contains("quick-link"));
+      });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible) {
+        setActiveSection(visible.target.id);
+      }
+    }, {
+      threshold: [0.35, 0.55, 0.75],
+      rootMargin: "-10% 0px -45% 0px"
+    });
+
+    observedSections.forEach((section) => observer.observe(section));
+    setActiveSection(window.location.hash.replace("#", "") || "overview");
+
+    const assetRows = Array.from(document.querySelectorAll(".asset-row"));
+    const filterChips = Array.from(document.querySelectorAll(".filter-chip"));
+
+    filterChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const filter = chip.dataset.filter;
+        filterChips.forEach((item) => item.classList.remove("active-filter"));
+        chip.classList.add("active-filter");
+
+        assetRows.forEach((row) => {
+          const matches = filter === "all" || row.dataset.status === filter;
+          row.style.display = matches ? "" : "none";
+        });
+      });
+    });
+
+    const roiChart = new Chart(document.getElementById("roiChart"), {
+      type: "bar",
+      data: {
+        labels: [
+          "Valluru RO",
+          "Gondhuru RO",
+          "Orphanage Transit",
+          "Cool Crate Pilot",
+          "Arogya Tablet"
+        ],
+        datasets: [
+          {
+            label: "Financial Outlay Index",
+            data: [92, 58, 18, 22, 16],
+            backgroundColor: "#163a5d",
+            borderRadius: 10,
+            maxBarThickness: 34
+          },
+          {
+            label: "Social ROI Index",
+            data: [28, 64, 96, 91, 72],
+            backgroundColor: ["#b91c1c", "#d97706", "#059669", "#10b981", "#366b9f"],
+            borderRadius: 10,
+            maxBarThickness: 34
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: "index",
+          intersect: false
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: "#214d79",
+              font: {
+                family: "Public Sans",
+                weight: "600"
+              }
+            }
+          },
+          tooltip: {
+            backgroundColor: "rgba(255, 255, 255, 0.98)",
+            titleColor: tooltipTitleColor,
+            bodyColor: tooltipBodyColor,
+            borderColor: "rgba(15, 39, 64, 0.12)",
+            borderWidth: 1,
+            padding: 12,
+            displayColors: true
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: "#214d79",
+              font: {
+                family: "Public Sans",
+                weight: "600"
+              }
+            },
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            suggestedMax: 100,
+            ticks: {
+              color: "#4f6b86",
+              font: {
+                family: "Public Sans"
+              }
+            },
+            grid: {
+              color: gridColor
+            }
+          }
+        }
+      }
+    });
+
+    const beneficiaryChart = new Chart(document.getElementById("beneficiaryChart"), {
+      type: "doughnut",
+      data: {
+        labels: [
+          "Scheduled Tribes (Water)",
+          "Orphans (Education/Transit)",
+          "Farmers (Agritech)",
+          "Elderly/Patients (Healthcare)"
+        ],
+        datasets: [{
+          data: [520, 280, 430, 270],
+          backgroundColor: ["#163a5d", "#059669", "#d97706", "#366b9f"],
+          borderColor: "#ffffff",
+          borderWidth: 4,
+          hoverOffset: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "68%",
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: {
+              color: "#214d79",
+              padding: 18,
+              boxWidth: 14,
+              font: {
+                family: "Public Sans",
+                weight: "600"
+              }
+            }
+          },
+          tooltip: {
+            backgroundColor: "rgba(255, 255, 255, 0.98)",
+            titleColor: tooltipTitleColor,
+            bodyColor: tooltipBodyColor,
+            borderColor: "rgba(15, 39, 64, 0.12)",
+            borderWidth: 1,
+            padding: 12
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
